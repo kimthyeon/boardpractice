@@ -31,4 +31,10 @@ public class BoardService {
         return boardRepository.findById(id).get(); // findById는 optional로 받아옴. get() 으로 받아오면 오류가 사라짐.
     }
 
+    // 글 삭제
+    public void boardDelete(Integer id) { // 메소드에서 return 타입이 없는게 void
+
+        boardRepository.deleteById(id);
+    }
+
 }
