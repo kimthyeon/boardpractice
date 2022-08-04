@@ -22,11 +22,14 @@ public class BoardController {
     }
 
     @PostMapping("/board/writepro")
-    public String boardWritePro(Board board) {
+    public String boardWritePro(Board board, Model model) {
 
         boardService.write(board);
 
-        return "";
+        model.addAttribute("message", "글 작성이 완료되었습니다.");
+        model.addAttribute("searchUrl", "/board/list");
+
+        return "message";
     }
 
     @GetMapping("/board/list")
@@ -62,15 +65,19 @@ public class BoardController {
 
     @PostMapping("/board/update/{id}")
     public String boardUpdate(@PathVariable("id") Integer id,
-                              Board board) {
+                              Board board,
+                              Model model) {
 
         Board boardTemp = boardService.boardView(id); // 기존에 있던 글이 담겨짐.
         boardTemp.setTitle(board.getTitle()); // 새로 입력한 내용을 덮어씌움.
         boardTemp.setTitle(board.getContent()); // 새로 입력한 내용을 덮어씌움.
 
-        boardService.write(board); 
+        boardService.write(board);
 
-        return "redirect:/board/list";
+        model.addAttribute("message", "글 수정이 완료되었습니다.");
+        model.addAttribute("searchUrl", "/board/list");
+
+        return "message";
 
     }
 
